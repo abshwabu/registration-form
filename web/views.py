@@ -1,17 +1,17 @@
+from django.shortcuts import render, redirect
 from formtools.wizard.views import SessionWizardView
 from .forms import RegistrationStep1Form, RegistrationStep2Form
-from django.shortcuts import render
-from django.contrib.auth import get_user_model,login
+
 class RegistrationWizardView(SessionWizardView):
-    form_list = [RegistrationStep1Form, RegistrationStep2Form]
     template_name = 'registration_wizard.html'
+    form_list = [RegistrationStep1Form, RegistrationStep2Form]
 
     def done(self, form_list, **kwargs):
-        username = form_list[0].cleaned_data['username']
-        email = form_list[0].cleaned_data['email']
-        password = form_list[1].cleaned_data['password1']
+        # Combine data from all steps
+        registration_data = {}
+        for form in form_list:
+            registration_data.update(form.cleaned_data)
 
-        User = get_user_model()
-        user = User.objects.create_user(username=username, email=email, password=password)
-        login(self.request,user)
-        return render(self.request, 'registration_done.html', {})
+        # Perform registration logic here (e.g., create user)
+
+        return redirect('registration_success')
