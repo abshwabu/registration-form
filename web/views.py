@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from formtools.wizard.views import SessionWizardView
 from .forms import RegistrationStep1Form, RegistrationStep2Form
 
@@ -14,4 +15,4 @@ class RegistrationWizardView(SessionWizardView):
 
         # Perform registration logic here (e.g., create user)
 
-        return redirect('registration_success')
+        return HttpResponseRedirect('/register/success/')
