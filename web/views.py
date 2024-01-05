@@ -16,3 +16,6 @@ class RegistrationWizardView(SessionWizardView):
         # Perform registration logic here (e.g., create user)
 
         return HttpResponseRedirect('/register/success/')
+    
+def home(request):
+    return render(request, 'home.html')
